@@ -205,6 +205,7 @@ switch($step) {
 			if (!$result) $db->halt();
 
 			$db->_query("DROP TABLE IF EXISTS `".DCRM_CON_PREFIX."Packages`");
+
 			$db->_query("CREATE TABLE `".DCRM_CON_PREFIX."Packages` (
 			 `ID` int(8) NOT NULL AUTO_INCREMENT,
 			 `Package` varchar(512) NOT NULL,
@@ -333,7 +334,7 @@ switch($step) {
 				$password_message = '<em>'.__('Your chosen password.').'</em>';
 			}
 			$db->_query("INSERT INTO `".DCRM_CON_PREFIX."Users` (`Username`, `Password`, `LastLoginTime`, `Power`)
-			  VALUES ('". $user_name ."', '" . password_hash($admin_password, PASSWORD_DEFAULT) . "', '0000-00-00 00:00:00', '1')");
+			  VALUES ('". $user_name ."', '" . password_hash(dcrm_slash($admin_password), PASSWORD_DEFAULT) . "', '0000-00-00 00:00:00', '1')");
 
 			// Copy *.inc.default.php to *.inc.php and config it.
 			define("AUTOFILL_SEO", $repo_title);

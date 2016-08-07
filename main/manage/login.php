@@ -90,8 +90,8 @@ if(isset($_POST['submit'])) {
 			goto endlabel;
 		}
 		$login = DB::fetch_first("SELECT * FROM `".DCRM_CON_PREFIX."Users` WHERE `Username` = '".DB::real_escape_string($_POST['username'])."' LIMIT 1");
-		if (!empty($login)) {
-			if ($login['Username'] === $_POST['username'] AND strtoupper($login['SHA1']) === strtoupper(sha1($_POST['password']))) {
+		if (!empty($login)) { 
+			if ($login['Username'] === $_POST['username'] && password_verify($_POST['password'], $login['Password'])) {
 				$login_query = DB::update(DCRM_CON_PREFIX.'Users', array('LastLoginTime' => date('Y-m-d H:i:s')), array('ID' => $login['ID']));
 				$_SESSION['power'] = $login['Power'];
 				$_SESSION['userid'] = $login['ID'];

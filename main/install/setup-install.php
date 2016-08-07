@@ -286,7 +286,7 @@ switch($step) {
 			$db->_query("CREATE TABLE `".DCRM_CON_PREFIX."Users` (
 			 `ID` int(8) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 			 `Username` varchar(64) NOT NULL,
-			 `SHA1` varchar(128) NOT NULL,
+			 `Password` CHAR(255) NOT NULL,
 			 `LastLoginTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
 			 `Power` int(8) NOT NULL
 			) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8");
@@ -332,8 +332,8 @@ switch($step) {
 			} else {
 				$password_message = '<em>'.__('Your chosen password.').'</em>';
 			}
-			$db->_query("INSERT INTO `".DCRM_CON_PREFIX."Users` (`Username`, `SHA1`, `LastLoginTime`, `Power`)
-			  VALUES ('". $user_name ."', '" . sha1( dcrm_slash( $admin_password ) ) . "', '0000-00-00 00:00:00', '1')");
+			$db->_query("INSERT INTO `".DCRM_CON_PREFIX."Users` (`Username`, `Password`, `LastLoginTime`, `Power`)
+			  VALUES ('". $user_name ."', '" . password_hash($admin_password, PASSWORD_DEFAULT) . "', '0000-00-00 00:00:00', '1')");
 
 			// Copy *.inc.default.php to *.inc.php and config it.
 			define("AUTOFILL_SEO", $repo_title);

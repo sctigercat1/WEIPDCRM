@@ -48,14 +48,14 @@ if(file_exists(ROOT.'manage/include/connect.inc.php')){
 } elseif(file_exists(SYSTEM_ROOT.'config/connect.inc.php')) {
 	define('CONF_PATH', SYSTEM_ROOT.'config/');
 } else {
-	if (strstr($_SERVER['PHP_SELF'], '/manage/'))
-		$root = dirname(dirname($_SERVER['PHP_SELF']));
-	else
-		$root = dirname($_SERVER['PHP_SELF']);
+    if (strstr($_SERVER['PHP_SELF'], '/manage/'))
+        $root = dirname(dirname($_SERVER['REQUEST_URI']));
+    else
+        $root = dirname($_SERVER['REQUEST_URI']);
     if (substr($root, -1) != '/')
         $root .= '/';
-	header('Location: '.$root.'install');
-	exit();
+    header('Location: '.$root.'install');
+    exit();
 }
 require_once(CONF_PATH.'connect.inc.php');
 
